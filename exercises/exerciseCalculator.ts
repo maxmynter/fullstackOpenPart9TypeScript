@@ -8,6 +8,28 @@ interface ExerciseStats {
   ratingDescription: string;
 }
 
+interface calculateExercise {
+  exerciseHours: number[];
+  targetHours: number;
+}
+
+const parseArgumentsExercise = (args: string[]): calculateExercise => {
+  if (args.length < 4)
+    throw new Error(
+      "Too few Arguments, target hours and at least one day of exercises"
+    );
+
+  return {
+    exerciseHours: [
+      ...args.slice(3).map((value: any) => {
+        if (!isNaN(Number(value))) return Number(value);
+        else throw new Error("Provided variables must be numbers");
+      }),
+    ],
+    targetHours: Number(args[2]),
+  };
+};
+
 const calculateExercise = (
   exerciseHours: number[],
   target: ExerciseStats["target"]
@@ -29,5 +51,14 @@ const calculateExercise = (
   };
 };
 
-const result = calculateExercise([3, 0, 2, 4.5, 0, 3, 1], 2);
-console.log(result);
+try {
+  const { exerciseHours, targetHours } = parseArgumentsExercise(process.argv);
+  const result = calculateExercise(exerciseHours, targetHours);
+  console.log(result);
+} catch (error: unknown) {
+  let errorMessage = "Something failed";
+  if (error instanceof Error) {
+    errorMessage += "Error is: " + error.message;
+  }
+  console.log(errorMessage);
+}
