@@ -1,4 +1,4 @@
-interface ExerciseStats {
+export interface ExerciseStats {
   periodLength: number;
   trainingDays: number;
   target: number;
@@ -30,7 +30,7 @@ const parseArgumentsExercise = (args: string[]): calculateExercise => {
   };
 };
 
-const calculateExercise = (
+export const calculateExercise = (
   exerciseHours: number[],
   target: ExerciseStats["target"]
 ): ExerciseStats => {
