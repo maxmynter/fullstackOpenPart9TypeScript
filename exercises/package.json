@@ -1,0 +1,12 @@
+{
+  "name": "fsopen9_exercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "calculateBMI": "ts-node bmiCalculator.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
