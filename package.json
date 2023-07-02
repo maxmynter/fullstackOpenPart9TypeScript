@@ -1,0 +1,24 @@
+{
+  "name": "fullstackopenpart9",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxmynter/fullstackOpenPart9TypeScript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxmynter/fullstackOpenPart9TypeScript/issues"
+  },
+  "homepage": "https://github.com/maxmynter/fullstackOpenPart9TypeScript#readme",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
