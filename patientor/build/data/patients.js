@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const patientData = [
+const utils_1 = __importDefault(require("../src/utils"));
+const data = [
     {
         id: "d2773336-f723-11e9-8f0b-362b9e155667",
         name: "John McClane",
@@ -42,4 +46,9 @@ const patientData = [
         occupation: "Digital evangelist",
     },
 ];
+const patientData = data.map((obj) => {
+    const patient = (0, utils_1.default)(obj);
+    patient.id = obj.id;
+    return patient;
+});
 exports.default = patientData;

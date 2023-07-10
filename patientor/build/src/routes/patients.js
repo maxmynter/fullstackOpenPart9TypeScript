@@ -11,7 +11,6 @@ router.get("/", (_req, res) => {
     res.send(patientService_1.default.getNonSensitiveDPatientEntries());
 });
 router.post("/", (req, res) => {
-    console.log(req.body);
     try {
         const newPatient = (0, utils_1.default)(req.body);
         const addedPatient = patientService_1.default.addPatientEntry(newPatient);

@@ -1,4 +1,4 @@
-import { newPatient } from "./types";
+import { Gender, newPatient } from "./types";
 
 const isString = (text: unknown): text is string => {
   return typeof text === "string" || text instanceof String;
@@ -25,11 +25,14 @@ const parseSSN = (SSN: unknown): string => {
   return SSN;
 };
 
-const parseGender = (gender: unknown): string => {
+const parseGender = (gender: unknown): Gender => {
   if (!gender || !isString(gender)) {
     throw new Error("Incorrect or missing gender");
   }
-  return gender;
+  if (gender === "male" || gender === "female" || gender === "other") {
+    return gender as Gender;
+  }
+  throw new Error("Gender has to be male, female or other");
 };
 
 const parseOccupation = (occupation: unknown): string => {
@@ -40,8 +43,6 @@ const parseOccupation = (occupation: unknown): string => {
 };
 
 const toNewPatient = (object: unknown): newPatient => {
-  console.log(object);
-
   if (!object || typeof object !== "object") {
     throw new Error("Incorrect or missing data");
   }
