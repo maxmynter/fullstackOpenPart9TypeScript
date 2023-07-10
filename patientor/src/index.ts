@@ -4,6 +4,7 @@ import diagnoseRouter from "./routes/diagnoses";
 import patientRouter from "./routes/patients";
 
 const app = express();
+app.use(express.json());
 const PORT = 3001;
 
 // Use CORS middleware

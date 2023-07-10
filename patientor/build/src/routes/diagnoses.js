@@ -7,7 +7,6 @@ const express_1 = __importDefault(require("express"));
 const diagnoseService_1 = __importDefault(require("../services/diagnoseService"));
 const router = express_1.default.Router();
 router.get("/", (_req, res) => {
-    //res.header("Access-Control-Allow-Origin", "*");
     res.send(diagnoseService_1.default.getDiagnoseEntries());
 });
 exports.default = router;
