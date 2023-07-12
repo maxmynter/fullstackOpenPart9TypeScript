@@ -15,11 +15,18 @@ const getNonSensitiveEntries = () => {
         visibility,
     }));
 };
-const addDiary = () => {
-    return null;
+const findById = (id) => {
+    const entry = entries_1.default.find((d) => d.id === id);
+    return entry;
+};
+const addDiary = (entry) => {
+    const newDiaryEntry = Object.assign({ id: Math.max(...entries_1.default.map((d) => d.id)) + 1 }, entry);
+    entries_1.default.push(newDiaryEntry);
+    return newDiaryEntry;
 };
 exports.default = {
     getEntries,
     addDiary,
     getNonSensitiveEntries,
+    findById,
 };
