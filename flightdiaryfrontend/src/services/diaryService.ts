@@ -18,7 +18,6 @@ const addNew = async (
     );
     return response.data;
   } catch (e) {
-    console.log("🚀 ~ file: diaryService.ts:21 ~ e:", e);
     if (axios.isAxiosError(e)) {
       const error = e;
       return error.request.response;
