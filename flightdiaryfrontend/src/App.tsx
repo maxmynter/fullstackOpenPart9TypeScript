@@ -39,6 +39,7 @@ const AddDiary = ({
   const [visibility, setVisibility] = useState<string>("");
   const [weather, setWeather] = useState<string>("");
   const [comment, setComment] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const onClickSubmit = async (): Promise<void> => {
     const visibilityWithType: Visibility = visibility as Visibility;
@@ -49,16 +50,26 @@ const AddDiary = ({
       weather: weatherWithType,
       comment,
     };
-    diaryService.addNew(newEntry);
-    setDate("");
-    setVisibility("");
-    setWeather("");
-    setComment("");
-    setDiaries(await diaryService.getAll());
+
+    const result = await diaryService.addNew(newEntry);
+    if (result as DiaryEntry) {
+      setDate("");
+      setVisibility("");
+      setWeather("");
+      setComment("");
+      setDiaries(await diaryService.getAll());
+    }
+    if (typeof result === "string") {
+      setError(result);
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
   };
 
   return (
     <div>
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
       <NewEntryAttribute
         attributeName="Date"
         setAttribute={setDate}
