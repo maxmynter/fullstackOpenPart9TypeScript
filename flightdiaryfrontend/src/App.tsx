@@ -2,6 +2,37 @@ import React, { useEffect, useState } from "react";
 import diaryService from "./services/diaryService";
 import { DiaryEntry, NewDiaryEntry, Visibility, Weather } from "./types";
 
+const RadioButtons = ({
+  buttons,
+  setAttribute,
+}: {
+  buttons: string[];
+  setAttribute: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  const [selected, setSelected] = useState<string>(buttons[0]);
+  return (
+    <div style={{ display: "flex", flexDirection: "row" }}>
+      {buttons.map((buttonValue: string) => {
+        return (
+          <div key={buttonValue}>
+            <input
+              type="radio"
+              id={buttonValue}
+              value={buttonValue}
+              checked={buttonValue === selected}
+              onChange={() => {
+                setAttribute(buttonValue);
+                setSelected(buttonValue);
+              }}
+            />
+            <label htmlFor={buttonValue}>{buttonValue}</label>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const NewEntryAttribute = ({
   attributeName,
   setAttribute,
@@ -11,6 +42,55 @@ const NewEntryAttribute = ({
   setAttribute: React.Dispatch<React.SetStateAction<string>>;
   attributeValue: string;
 }) => {
+  const getInput = (attributeName: string) => {
+    switch (attributeName) {
+      case "Date":
+        return (
+          <>
+            <input
+              type="date"
+              id="start"
+              name="trip-start"
+              value={attributeValue}
+              onChange={(event) => setAttribute(event.target.value)}
+            />
+          </>
+        );
+      case "Visibility":
+        return (
+          <>
+            {
+              <RadioButtons
+                buttons={["great", "good", "ok", "poor"]}
+                setAttribute={setAttribute}
+              />
+            }
+          </>
+        );
+      case "Weather":
+        return (
+          <>
+            {
+              <RadioButtons
+                buttons={["sunny", "rainy", "cloudy", "stromy", "windy"]}
+                setAttribute={setAttribute}
+              />
+            }
+          </>
+        );
+      default:
+        return (
+          <>
+            <input
+              style={{ height: 11 }}
+              value={attributeValue}
+              onChange={(event) => setAttribute(event.target.value)}
+            />
+          </>
+        );
+    }
+  };
+
   return (
     <div
       style={{
@@ -21,11 +101,7 @@ const NewEntryAttribute = ({
       }}
     >
       <p style={{ padding: 3 }}>{attributeName}</p>
-      <input
-        style={{ height: 11 }}
-        value={attributeValue}
-        onChange={(event) => setAttribute(event.target.value)}
-      />
+      {getInput(attributeName)}
     </div>
   );
 };
@@ -35,7 +111,7 @@ const AddDiary = ({
 }: {
   setDiaries: React.Dispatch<React.SetStateAction<DiaryEntry[]>>;
 }) => {
-  const [date, setDate] = useState<string>("");
+  const [date, setDate] = useState<string>(String(new Date()));
   const [visibility, setVisibility] = useState<string>("");
   const [weather, setWeather] = useState<string>("");
   const [comment, setComment] = useState<string>("");
@@ -102,7 +178,7 @@ function App() {
       setDiaries(await diaryService.getAll());
     };
     getDiariesFromBackend();
-  });
+  }, []);
 
   return (
     <div>
