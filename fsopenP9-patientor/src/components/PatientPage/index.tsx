@@ -1,10 +1,26 @@
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import { useParams } from "react-router-dom";
-import { Patient } from "../../types";
+import { Entry, Patient } from "../../types";
 
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
+
+const DisplayEntry = ({ entry }: { entry: Entry }) => {
+  return (
+    <div>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <p style={{ marginRight: 5 }}>{entry.date}</p>{" "}
+        <p>{entry.description}</p>
+      </div>
+      <ul>
+        {entry.diagnosisCodes.map((code) => (
+          <li>{code}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const DisplayPatient = ({ patient }: { patient: Patient }) => {
   return (
@@ -15,6 +31,11 @@ const DisplayPatient = ({ patient }: { patient: Patient }) => {
       </div>
       <p>SSN: {patient.ssn}</p>
       <p> Occupation: {patient.occupation}</p>
+
+      <h2>Entries</h2>
+      {patient.entries.map((entry) => (
+        <DisplayEntry entry={entry} />
+      ))}
     </div>
   );
 };
