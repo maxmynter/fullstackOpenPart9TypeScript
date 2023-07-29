@@ -8,6 +8,19 @@ router.get("/", (_req, res) => {
   res.send(patientService.getNonSensitiveDPatientEntries());
 });
 
+router.get("/:id", (req, res) => {
+  const patientId: string = req.params.id;
+  try {
+    res.send(patientService.getPatientByID(patientId));
+  } catch (error: unknown) {
+    let errorMessage = "Error getting patient. ";
+    if (error instanceof Error) {
+      errorMessage += error.message;
+    }
+    res.status(400).send(errorMessage);
+  }
+});
+
 router.post("/", (req, res) => {
   try {
     const newPatient = toNewPatient(req.body);

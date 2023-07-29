@@ -17,6 +17,9 @@ const getNonSensitiveDPatientEntries = () => {
         occupation,
     }));
 };
+const getPatientByID = (id) => {
+    return patients_1.default.find((patient) => patient.id === id);
+};
 const addPatientEntry = (patient) => {
     const id = (0, uuid_1.v1)();
     const newPatient = Object.assign({ id }, patient);
@@ -27,4 +30,5 @@ exports.default = {
     getPatientEntries,
     getNonSensitiveDPatientEntries,
     addPatientEntry,
+    getPatientByID,
 };

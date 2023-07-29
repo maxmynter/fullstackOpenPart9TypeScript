@@ -10,6 +10,19 @@ const router = express_1.default.Router();
 router.get("/", (_req, res) => {
     res.send(patientService_1.default.getNonSensitiveDPatientEntries());
 });
+router.get("/:id", (req, res) => {
+    const patientId = req.params.id;
+    try {
+        res.send(patientService_1.default.getPatientByID(patientId));
+    }
+    catch (error) {
+        let errorMessage = "Error getting patient. ";
+        if (error instanceof Error) {
+            errorMessage += error.message;
+        }
+        res.status(400).send(errorMessage);
+    }
+});
 router.post("/", (req, res) => {
     try {
         const newPatient = (0, utils_1.default)(req.body);
