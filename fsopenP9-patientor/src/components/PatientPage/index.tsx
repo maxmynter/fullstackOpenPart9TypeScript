@@ -1,28 +1,51 @@
 import { useEffect, useState } from "react";
 import patientService from "../../services/patients";
 import { useParams } from "react-router-dom";
-import { Entry, Patient } from "../../types";
+import { DiagnoseEntry, Entry, Patient } from "../../types";
 
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
 
-const DisplayEntry = ({ entry }: { entry: Entry }) => {
+const DisplayEntry = ({
+  entry,
+  diagnoseCodes,
+}: {
+  entry: Entry;
+  diagnoseCodes: DiagnoseEntry[];
+}) => {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "row" }}>
         <p style={{ marginRight: 5 }}>{entry.date}</p>{" "}
         <p>{entry.description}</p>
       </div>
-      <ul>
-        {entry.diagnosisCodes.map((code) => (
-          <li>{code}</li>
-        ))}
-      </ul>
+      {entry.diagnosisCodes && (
+        <ul>
+          {entry.diagnosisCodes.map((code) => (
+            <li key={code} style={{ display: "flex", flexDirection: "row" }}>
+              <p style={{ marginRight: 3 }}>{code}</p>
+              <p>
+                {
+                  diagnoseCodes.find(
+                    (diagnosisEntry) => diagnosisEntry.code === code
+                  )?.name
+                }
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
-const DisplayPatient = ({ patient }: { patient: Patient }) => {
+const DisplayPatient = ({
+  patient,
+  diagnoseCodes,
+}: {
+  patient: Patient;
+  diagnoseCodes: DiagnoseEntry[];
+}) => {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "row" }}>
@@ -34,20 +57,20 @@ const DisplayPatient = ({ patient }: { patient: Patient }) => {
 
       <h2>Entries</h2>
       {patient.entries.map((entry) => (
-        <DisplayEntry entry={entry} />
+        <DisplayEntry
+          key={entry.id}
+          entry={entry}
+          diagnoseCodes={diagnoseCodes}
+        />
       ))}
     </div>
   );
 };
 
-const PatientPage = () => {
+const PatientPage = ({ diagnoseCodes }: { diagnoseCodes: DiagnoseEntry[] }) => {
   const { patientId } = useParams();
   const [patientData, setPatientData] = useState<Patient | undefined>(
     undefined
-  );
-  console.log(
-    "🚀 ~ file: index.tsx:12 ~ PatientPage ~ patientData:",
-    patientData
   );
 
   useEffect(() => {
@@ -62,7 +85,7 @@ const PatientPage = () => {
   return (
     <div>
       {patientData ? (
-        <DisplayPatient patient={patientData} />
+        <DisplayPatient patient={patientData} diagnoseCodes={diagnoseCodes} />
       ) : (
         <p>No patient Data for id {patientId} </p>
       )}
