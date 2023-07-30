@@ -33,12 +33,17 @@ export interface Entry {
   description: string;
   diagnosisCodes: string[];
 }
+
 export interface OccupationalHealthcareEntry extends Entry {
   employerName: string;
   sickLeave?: SickLeave;
 }
 
 export interface HospitalEntry extends Entry {
+  discharge: Discharge;
+}
+
+export interface HealthCheckEntry extends Entry {
   discharge: Discharge;
 }
 

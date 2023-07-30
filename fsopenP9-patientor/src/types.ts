@@ -16,13 +16,44 @@ export enum Gender {
   Other = "other",
 }
 
+export enum EntryType {
+  Occupational = "OccupationalHealthcare",
+  Check = "HealthCheck",
+  hospital = "Hospital",
+}
+
+export interface Discharge {
+  date: string;
+  criteria: string;
+}
+
+export interface SickLeave {
+  startDate: string;
+  endDate: string;
+}
+
+export interface OccupationalHealthcareEntry extends Entry {
+  type: EntryType.Occupational;
+  employerName: string;
+  sickLeave?: SickLeave;
+}
 export interface Entry {
   id: string;
   date: string;
-  type: string;
+  type: EntryType;
   specialist: string;
   description: string;
   diagnosisCodes: string[];
+}
+
+export interface HospitalEntry extends Entry {
+  type: EntryType.hospital;
+  discharge: Discharge;
+}
+
+export interface HealthCheckEntry extends Entry {
+  type: EntryType.Check;
+  healthCheckRating: number;
 }
 
 export interface Patient {
@@ -32,7 +63,9 @@ export interface Patient {
   gender: Gender;
   ssn?: string;
   dateOfBirth?: string;
-  entries: Entry[];
+  entries: Array<
+    HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry
+  >;
 }
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
