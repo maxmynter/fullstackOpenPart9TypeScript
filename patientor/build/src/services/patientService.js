@@ -26,9 +26,24 @@ const addPatientEntry = (patient) => {
     patients_1.default.push(newPatient);
     return newPatient;
 };
+const addEntryToPatient = ({ targetId, entry, }) => {
+    const indexOfPatient = patients_1.default.findIndex((patient) => patient.id === targetId);
+    if (indexOfPatient !== -1) {
+        const entryWithId = Object.assign({ id: (0, uuid_1.v1)() }, entry);
+        patients_1.default[indexOfPatient].entries = [
+            ...patients_1.default[indexOfPatient].entries,
+            entryWithId,
+        ];
+        return patients_1.default[indexOfPatient];
+    }
+    else {
+        throw new Error(`No patient with id : ${targetId}`);
+    }
+};
 exports.default = {
     getPatientEntries,
     getNonSensitiveDPatientEntries,
     addPatientEntry,
     getPatientByID,
+    addEntryToPatient,
 };

@@ -1,4 +1,11 @@
-import { NonSensitivePatient, Patient, newPatient } from "../types";
+import {
+  NonSensitivePatient,
+  Patient,
+  newHealthCheckEntry,
+  newHospitalEntry,
+  newOccupationalHealthcareEntry,
+  newPatient,
+} from "../types";
 import { v1 as uuid } from "uuid";
 import patientData from "../../data/patients";
 
@@ -32,9 +39,36 @@ const addPatientEntry = (patient: newPatient): Patient => {
   return newPatient;
 };
 
+const addEntryToPatient = ({
+  targetId,
+  entry,
+}: {
+  targetId: string;
+  entry:
+    | newHealthCheckEntry
+    | newHospitalEntry
+    | newOccupationalHealthcareEntry;
+}): Patient => {
+  const indexOfPatient = patientData.findIndex(
+    (patient) => patient.id === targetId
+  );
+  if (indexOfPatient !== -1) {
+    const entryWithId = { id: uuid(), ...entry };
+
+    patientData[indexOfPatient].entries = [
+      ...patientData[indexOfPatient].entries,
+      entryWithId,
+    ];
+    return patientData[indexOfPatient];
+  } else {
+    throw new Error(`No patient with id : ${targetId}`);
+  }
+};
+
 export default {
   getPatientEntries,
   getNonSensitiveDPatientEntries,
   addPatientEntry,
   getPatientByID,
+  addEntryToPatient,
 };

@@ -34,18 +34,29 @@ export interface Entry {
   diagnosisCodes: string[];
 }
 
+export type newEntry = Omit<Entry, "id">;
+
 export interface OccupationalHealthcareEntry extends Entry {
   employerName: string;
   sickLeave?: SickLeave;
 }
 
+export type newOccupationalHealthcareEntry = Omit<
+  OccupationalHealthcareEntry,
+  "id"
+>;
+
 export interface HospitalEntry extends Entry {
   discharge: Discharge;
 }
 
+export type newHospitalEntry = Omit<HospitalEntry, "id">;
+
 export interface HealthCheckEntry extends Entry {
-  discharge: Discharge;
+  healthCheckEntry: number;
 }
+
+export type newHealthCheckEntry = Omit<HealthCheckEntry, "id">
 
 export interface Patient {
   id: string;

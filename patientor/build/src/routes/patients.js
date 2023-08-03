@@ -23,9 +23,27 @@ router.get("/:id", (req, res) => {
         res.status(400).send(errorMessage);
     }
 });
+router.post("/:id/entries", (req, res) => {
+    const targetId = req.params.id;
+    const entry = utils_1.default.toNewEntry(req.body);
+    try {
+        const patientWithNewEntry = patientService_1.default.addEntryToPatient({
+            targetId,
+            entry,
+        });
+        res.send(patientWithNewEntry);
+    }
+    catch (error) {
+        let errorMessage = "Something went wrong.";
+        if (error instanceof Error) {
+            errorMessage += " Error: " + error.message;
+        }
+        res.status(400).send(errorMessage);
+    }
+});
 router.post("/", (req, res) => {
     try {
-        const newPatient = (0, utils_1.default)(req.body);
+        const newPatient = utils_1.default.toNewPatient(req.body);
         const addedPatient = patientService_1.default.addPatientEntry(newPatient);
         res.send(addedPatient);
     }

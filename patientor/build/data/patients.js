@@ -114,7 +114,7 @@ const data = [
     },
 ];
 const patientData = data.map((obj) => {
-    const patient = (0, utils_1.default)(obj);
+    const patient = utils_1.default.toNewPatient(obj);
     patient.id = obj.id;
     return patient;
 });
