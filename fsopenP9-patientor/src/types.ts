@@ -50,6 +50,7 @@ export interface Entry {
   description: string;
   diagnosisCodes: string[];
 }
+export type newEntry = Omit<Entry, "id">;
 
 export interface HospitalEntry extends Entry {
   type: EntryType.hospital;
