@@ -37,6 +37,11 @@ export interface OccupationalHealthcareEntry extends Entry {
   employerName: string;
   sickLeave?: SickLeave;
 }
+export type newOccupationalHealthcareEntry = Omit<
+  OccupationalHealthcareEntry,
+  "id"
+>;
+
 export interface Entry {
   id: string;
   date: string;
@@ -51,10 +56,14 @@ export interface HospitalEntry extends Entry {
   discharge: Discharge;
 }
 
+export type newHospitalEntry = Omit<HospitalEntry, "id">;
+
 export interface HealthCheckEntry extends Entry {
   type: EntryType.Check;
   healthCheckRating: number;
 }
+
+export type newHealthCheckEntry = Omit<HealthCheckEntry, "id">;
 
 export interface Patient {
   id: string;
