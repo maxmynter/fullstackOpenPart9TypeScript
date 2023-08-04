@@ -215,9 +215,9 @@ const toNewEntry = (
       };
       return newHospitalEntry;
     }
-    if ("healthCheckEntry" in object) {
+    if ("healthCheckRating" in object) {
       const newHealthCheckEntry: newHealthCheckEntry = {
-        healthCheckEntry: parseHealtCheckEntry(object.healthCheckEntry),
+        healthCheckEntry: parseHealtCheckEntry(object.healthCheckRating),
         ...newEntry,
       };
       return newHealthCheckEntry;
