@@ -24,10 +24,12 @@ const FormInputRow = ({
   inputName,
   value,
   setValue,
+  inputType,
 }: {
   inputName: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+  inputType?: string;
 }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", padding: "5px" }}>
@@ -35,6 +37,7 @@ const FormInputRow = ({
       <input
         key={inputName}
         value={value}
+        type={inputType}
         onChange={(event) => setValue(event.target.value)}
       />
     </div>
@@ -84,6 +87,7 @@ const FormInputSwitch = ({
         <>
           <FormInputRow
             inputName={"Discharge Date"}
+            inputType="date"
             value={dischargeDate}
             setValue={setDischargeDate}
           />
@@ -104,11 +108,13 @@ const FormInputSwitch = ({
           />
           <FormInputRow
             inputName={"Sick Leave Start Date"}
+            inputType="date"
             value={sickLeaveStartDate}
             setValue={setSickLeaveStartDate}
           />
           <FormInputRow
             inputName={"Sicke Leave End Date"}
+            inputType="date"
             value={sickLeaveEndDate}
             setValue={setSickLeaveEndDate}
           />
@@ -252,7 +258,12 @@ const AddEntryToPatient = ({
               </option>
             </select>
           </div>
-          <FormInputRow inputName={"Date"} value={date} setValue={setDate} />
+          <FormInputRow
+            inputName={"Date"}
+            inputType="date"
+            value={date}
+            setValue={setDate}
+          />
           <FormInputRow
             inputName={"Specialist"}
             value={specialist}
