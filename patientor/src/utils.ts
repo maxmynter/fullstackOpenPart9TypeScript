@@ -110,14 +110,14 @@ const parseDiagnosisCodes = (array: unknown): Array<DiagnoseEntry["code"]> => {
 
 const parseStringExists = (str: unknown): string => {
   if (!str || !isString(str)) {
-    throw new Error(`Incorrect or entry, ${str}`);
+    throw new Error(`Incorrect or empty String, ${str}`);
   }
   return str;
 };
 
 const parseType = (type: unknown): EntryType => {
   if (!type || !isString(type)) {
-    throw new Error(`Incorrect or entry, ${type}`);
+    throw new Error(`Incorrect or empty Type, ${type}`);
   }
   if (
     !(
@@ -200,10 +200,12 @@ const toNewEntry = (
       diagnosisCodes: parseDiagnosisCodes(object.diagnosisCodes),
     };
 
-    if ("employerName" in object && "sickLeave" in object) {
+    if ("employerName" in object) {
       const newOccupationalHealthcareEntry: newOccupationalHealthcareEntry = {
         employerName: parseStringExists(object.employerName),
-        sickLeave: parseSickLeave(object.sickLeave),
+        ...("sickLeave" in object
+          ? { sickLeave: parseSickLeave(object.sickLeave) }
+          : undefined),
         ...newEntry,
       };
       return newOccupationalHealthcareEntry;
