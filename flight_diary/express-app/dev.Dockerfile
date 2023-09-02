@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm ci
+RUN npm i
 
 USER node
-CMD [ "npm", "run" ,"start"]
+CMD [ "npm", "run" ,"dev"]

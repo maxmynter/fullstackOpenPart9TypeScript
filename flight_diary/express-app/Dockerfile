@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN npm i --legacy-peer-deps
+RUN npm ci
 
 USER node
 CMD [ "npm", "run" ,"start"]

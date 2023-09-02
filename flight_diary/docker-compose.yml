@@ -1,0 +1,23 @@
+services:
+  front:
+    image: flightdiary-frontend-prod
+    build:
+      context: flightdiaryfrontend
+      dockerfile: Dockerfile
+    environment:
+      REACT_APP_API_BASE_URL: http://localhost:8080/backend/api/
+  back:
+    image: flightdiary-backend-prod
+    build:
+      context: express-app
+      dockerfile: Dockerfile
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: reverse-proxy-flightdiary-prod
+    depends_on:
+      - front
+      - back
